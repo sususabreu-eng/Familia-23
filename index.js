@@ -5,14 +5,14 @@ const {
 } = require("discord.js");
 
 const TOKEN = process.env.TOKEN;
-const CLIENT_ID = "COLOCA_AQUI_ID_DO_BOT";
+const CLIENT_ID = "1461623987527483446";
 
 const GUILD_ID = "1287024349441953915";
 const CHANNEL_RECRUTAMENTO = "1289765876698189927";
 const CHANNEL_STAFF = "1289235128614129746";
 const ROLE_ID = "1287024349509058662";
 
-const IMAGEM = "COLOCA_AQUI_LINK_DA_IMAGEM";
+const IMAGEM = "https://i.postimg.cc/t4JtFt4z/Captura-de-ecra-2026-04-28-145331.png";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
