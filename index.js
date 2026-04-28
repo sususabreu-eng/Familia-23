@@ -114,7 +114,7 @@ client.on("interactionCreate", async interaction => {
     const motivo = interaction.fields.getTextInputValue("motivo");
 
     const embed = new EmbedBuilder()
-      .setTitle("📋 Nova Candidatura")
+      .setTitle("📋 Nova Candidatura Pendente")
       .setColor("#00cfff")
       .setThumbnail(interaction.user.displayAvatarURL())
       .addFields(
@@ -138,8 +138,8 @@ client.on("interactionCreate", async interaction => {
         .setStyle(ButtonStyle.Danger)
     );
 
-    const staffChannel = await client.channels.fetch(CHANNEL_STAFF);
-    await staffChannel.send({ embeds: [embed], components: [row] });
+    const pendingChannel = await client.channels.fetch(CHANNEL_PENDENTE);
+    await pendingChannel.send({ embeds: [embed], components: [row] });
 
     return interaction.reply({
       content: "✅ Candidatura enviada com sucesso! Aguarda análise da staff.",
@@ -158,12 +158,18 @@ client.on("interactionCreate", async interaction => {
     await member.roles.add(ROLE_ID);
     await member.setNickname(`${nome} | ${id}`);
 
+    const approvedChannel = await client.channels.fetch(CHANNEL_APROVADOS);
+    await approvedChannel.send(`✅ ${member} foi aprovado na Família 23.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**`);
+
     await interaction.reply(`✅ ${member} aprovado! Cargo dado e nickname alterado.`);
   }
 
   if (interaction.isButton() && interaction.customId.startsWith("recusar_")) {
     const userId = interaction.customId.split("_")[1];
     const member = await interaction.guild.members.fetch(userId).catch(() => null);
+
+    const refusedChannel = await client.channels.fetch(CHANNEL_RECUSADOS);
+    await refusedChannel.send(`❌ Candidatura recusada${member ? `: ${member}` : ""}.`);
 
     await interaction.reply(`❌ Candidatura recusada${member ? `: ${member}` : ""}.`);
   }
