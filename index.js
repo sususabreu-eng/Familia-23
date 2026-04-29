@@ -172,7 +172,7 @@ await interaction.message.edit({
 });
 
     const approvedChannel = await client.channels.fetch(CHANNEL_APROVADOS);
-    await approvedChannel.send(`✅ ${member} foi aprovado na Família 23.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**`);
+    await approvedChannel.send(`✅ ${member} foi aprovado na Família 23.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**\n🛡️ Aprovado por: ${interaction.user}`);
 
     await interaction.reply(`✅ ${member} aprovado! Cargo dado e nickname alterado.`);
   }
@@ -195,7 +195,7 @@ await interaction.message.edit({
     const refusedChannel = await client.channels.fetch(CHANNEL_RECUSADOS);
     await refusedChannel.send(`❌ Candidatura recusada${member ? `: ${member}` : ""}.`);
 
-    await interaction.reply(`❌ Candidatura recusada${member ? `: ${member}` : ""}.`);
+    await refusedChannel.send(`❌ Candidatura recusada${member ? `: ${member}` : ""}\n🛡️ Recusado por: ${interaction.user}`);
   }
 });
 
