@@ -24,7 +24,7 @@ const client = new Client({
 
 const commands = [
   new SlashCommandBuilder()
-    .setName("painel")
+    .setName("recrutamento_pain")
     .setDescription("Enviar painel de recrutamento")
 ].map(cmd => cmd.toJSON());
 
