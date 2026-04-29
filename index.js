@@ -159,6 +159,17 @@ return interaction.editReply("✅ Painel enviado!");
 
     await member.roles.add(ROLE_ID);
     await member.setNickname(`${nome} | ${id}`);
+    
+    const oldEmbed = interaction.message.embeds[0];
+
+const novoEmbed = EmbedBuilder.from(oldEmbed)
+  .setColor("#00ff00")
+  .setTitle("✅ Candidatura Aprovada");
+
+await interaction.message.edit({
+  embeds: [novoEmbed],
+  components: []
+});
 
     const approvedChannel = await client.channels.fetch(CHANNEL_APROVADOS);
     await approvedChannel.send(`✅ ${member} foi aprovado na Família 23.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**`);
@@ -169,6 +180,17 @@ return interaction.editReply("✅ Painel enviado!");
   if (interaction.isButton() && interaction.customId.startsWith("recusar_")) {
     const userId = interaction.customId.split("_")[1];
     const member = await interaction.guild.members.fetch(userId).catch(() => null);
+
+    const oldEmbed = interaction.message.embeds[0];
+
+const novoEmbed = EmbedBuilder.from(oldEmbed)
+  .setColor("#ff0000")
+  .setTitle("❌ Candidatura Recusada");
+
+await interaction.message.edit({
+  embeds: [novoEmbed],
+  components: []
+});
 
     const refusedChannel = await client.channels.fetch(CHANNEL_RECUSADOS);
     await refusedChannel.send(`❌ Candidatura recusada${member ? `: ${member}` : ""}.`);
