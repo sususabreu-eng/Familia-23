@@ -40,7 +40,7 @@ client.once("ready", async () => {
 });
 
 client.on("interactionCreate", async interaction => {
-  if (interaction.isChatInputCommand() && interaction.commandName === "painel") {
+  if (interaction.isChatInputCommand() && interaction.commandName === "recrutamento_painel") {
     const embed = new EmbedBuilder()
       .setTitle("📥 RECRUTAMENTO FAMÍLIA 23")
       .setDescription("💗 Força • Lealdade • Respeito 💙\n\nClica no botão abaixo para te candidatares.")
