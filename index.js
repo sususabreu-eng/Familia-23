@@ -54,10 +54,12 @@ client.on("interactionCreate", async interaction => {
         .setStyle(ButtonStyle.Primary)
     );
 
-    const channel = await client.channels.fetch(CHANNEL_RECRUTAMENTO);
-    await channel.send({ embeds: [embed], components: [row] });
+await interaction.deferReply({ ephemeral: true });
 
-    return interaction.reply({ content: "✅ Painel enviado!", ephemeral: true });
+const channel = await client.channels.fetch(CHANNEL_RECRUTAMENTO);
+await channel.send({ embeds: [embed], components: [row] });
+
+return interaction.editReply("✅ Painel enviado!");
   }
 
   if (interaction.isButton() && interaction.customId === "recrutar") {
