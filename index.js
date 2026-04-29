@@ -15,6 +15,7 @@ const CHANNEL_APROVADOS = "1498670476069965961";
 const CHANNEL_RECUSADOS = "1498698744693260318";
 
 const ROLE_ID = "1498670473649586184";
+const ROLE_VISITANTE = "1498670473649586183";
 
 const IMAGEM = "https://i.postimg.cc/t4JtFt4z/Captura-de-ecra-2026-04-28-145331.png";
 
@@ -158,6 +159,7 @@ return interaction.editReply("✅ Painel enviado!");
     const id = fields.find(f => f.name === "ID Servidor")?.value || "SEM ID";
 
     await member.roles.add(ROLE_ID);
+    await member.roles.remove(ROLE_VISITANTE);
     await member.setNickname(`${nome} | ${id}`);
     
     const oldEmbed = interaction.message.embeds[0];
