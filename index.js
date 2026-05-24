@@ -72,6 +72,8 @@ async interaction=>{
 
 try{
 
+// comando painel
+
 if(
 interaction.isChatInputCommand() &&
 interaction.commandName==="recrutamento_painel"
@@ -123,6 +125,9 @@ content:"✅ Painel enviado"
 
 }
 
+
+// botão candidatar
+
 if(
 interaction.isButton() &&
 interaction.customId==="recrutar"
@@ -155,14 +160,92 @@ new TextInputBuilder()
 .setRequired(true);
 
 modal.addComponents(
-new ActionRowBuilder().addComponents(nome),
-new ActionRowBuilder().addComponents(id),
-new ActionRowBuilder().addComponents(telefone)
+
+new ActionRowBuilder()
+.addComponents(nome),
+
+new ActionRowBuilder()
+.addComponents(id),
+
+new ActionRowBuilder()
+.addComponents(telefone)
+
 );
 
 return interaction.showModal(
 modal
 );
+
+}
+
+
+// formulário enviado
+
+if(
+interaction.isModalSubmit() &&
+interaction.customId==="form"
+){
+
+const nome=
+interaction.fields.getTextInputValue(
+"nome"
+);
+
+const id=
+interaction.fields.getTextInputValue(
+"id"
+);
+
+const telefone=
+interaction.fields.getTextInputValue(
+"telefone"
+);
+
+const embed=
+new EmbedBuilder()
+
+.setTitle(
+"📋 Nova candidatura"
+)
+
+.setColor("#00cfff")
+
+.addFields(
+
+{
+name:"👤 Nome RP",
+value:nome
+},
+
+{
+name:"🆔 ID Servidor",
+value:id
+},
+
+{
+name:"📱 Celular",
+value:telefone
+}
+
+);
+
+const canal=
+await client.channels.fetch(
+CHANNEL_PENDENTE
+);
+
+await canal.send({
+embeds:[embed]
+});
+
+return interaction.reply({
+
+content:
+"✅ Candidatura enviada com sucesso!",
+
+ephemeral:true
+
+});
 
 }
 
