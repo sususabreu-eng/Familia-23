@@ -45,7 +45,7 @@ interaction.commandName==="recrutamento_painel"
 ){
 
 const embed = new EmbedBuilder()
-.setTitle("📥 RECRUTAMENTO FAMÍLIA 23 BAHAMAS")
+.setTitle("📥 RECRUTAMENTO FAMÍLIA BAHAMAS")
 .setDescription(
 "💗 Força • Lealdade • Respeito 💙\n\nClica abaixo para te candidatares."
 )
