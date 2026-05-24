@@ -60,7 +60,9 @@ console.log(err);
 
 });
 
-client.on("interactionCreate", async(interaction)=>{
+client.on("interactionCreate", async interaction => {
+
+console.log("INTERAÇÃO RECEBIDA:", interaction.type);
 
 try{
 
@@ -144,6 +146,15 @@ ephemeral:true
 
 }
 
+});
+process.on("unhandledRejection", error => {
+  console.error("ERRO REJECTION:");
+  console.error(error);
+});
+
+process.on("uncaughtException", error => {
+  console.error("ERRO FATAL:");
+  console.error(error);
 });
 
 client.login(TOKEN);
