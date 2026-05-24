@@ -7,151 +7,379 @@ ButtonStyle,
 ModalBuilder,
 TextInputBuilder,
 TextInputStyle,
-EmbedBuilder,
-SlashCommandBuilder,
-REST,
-Routes
-} = require("discord.js");
+EmbedBuilder
+}=require("discord.js");
 
-const TOKEN = process.env.TOKEN;
+const TOKEN=process.env.TOKEN;
 
-const CLIENT_ID = "1461623987527483446";
-const GUILD_ID = "1498670473649586176";
+const CHANNEL_RECRUTAMENTO="1498670476573151463";
+const CHANNEL_PENDENTE="1498698416929247313";
 
-const CHANNEL_RECRUTAMENTO = "1498670476573151463";
-const CHANNEL_PENDENTE = "1498698416929247313";
+const ROLE_ID="1498670473649586184";
+const ROLE_VISITANTE="1498670473649586183";
 
-const IMAGEM = "https://i.postimg.cc/jjbwdj9S/6e82bcb2-477c-4f56-ab47-b74988697e50.png";
+const IMAGEM="https://i.postimg.cc/jjbwdj9S/6e82bcb2-477c-4f56-ab47-b74988697e50.png";
 
-const client = new Client({
+const client=new Client({
+
 intents:[
 GatewayIntentBits.Guilds,
 GatewayIntentBits.GuildMembers
 ]
+
 });
 
 client.once("clientReady",()=>{
-console.log(`Online ${client.user.tag}`);
+
+console.log(
+`Online ${client.user.tag}`
+);
+
 });
 
-client.on("interactionCreate", async interaction=>{
+client.on(
+"interactionCreate",
+async interaction=>{
 
 try{
 
 // painel
+
 if(
 interaction.isChatInputCommand() &&
 interaction.commandName==="recrutamento_painel"
 ){
 
-const embed = new EmbedBuilder()
-.setTitle("📥 RECRUTAMENTO FAMÍLIA BAHAMAS")
-.setDescription(
-"💗 Força • Lealdade • Respeito 💙\n\nClica abaixo para te candidatares."
+const embed=
+new EmbedBuilder()
+
+.setTitle(
+"📥 RECRUTAMENTO FAMÍLIA 23 BAHAMAS"
 )
+
+.setDescription(
+
+`💗 Força • Lealdade • Respeito 💙
+
+📋 Faz tua candidatura
+🛡️ Aguarda aprovação
+🔥 Mostra o teu valor`
+
+)
+
 .setColor("#ff007f")
 .setImage(IMAGEM);
 
-const row = new ActionRowBuilder()
+const row=
+new ActionRowBuilder()
+
 .addComponents(
+
 new ButtonBuilder()
+
 .setCustomId("recrutar")
 .setLabel("📩 Candidatar")
-.setStyle(ButtonStyle.Primary)
+.setStyle(
+ButtonStyle.Primary
+)
+
 );
 
-const canal = await client.channels.fetch(CHANNEL_RECRUTAMENTO);
+const canal=
+await client.channels.fetch(
+CHANNEL_RECRUTAMENTO
+);
 
 await canal.send({
+
 embeds:[embed],
 components:[row]
+
 });
 
 return interaction.reply({
+
 content:"✅ Painel enviado",
+
 ephemeral:true
+
 });
+
 }
 
-// botão
+
+// botão candidatar
+
 if(
 interaction.isButton() &&
 interaction.customId==="recrutar"
 ){
 
-const modal = new ModalBuilder()
-.setCustomId("form")
-.setTitle("Candidatura Bahamas");
+const modal=
+new ModalBuilder()
 
-const nome = new TextInputBuilder()
+.setCustomId(
+"form"
+)
+
+.setTitle(
+"Candidatura Bahamas"
+);
+
+const nome=
+new TextInputBuilder()
+
 .setCustomId("nome")
 .setLabel("Nome RP")
-.setStyle(TextInputStyle.Short)
+.setStyle(
+TextInputStyle.Short
+)
 .setRequired(true);
 
-const id = new TextInputBuilder()
+const id=
+new TextInputBuilder()
+
 .setCustomId("id")
 .setLabel("ID Servidor")
-.setStyle(TextInputStyle.Short)
+.setStyle(
+TextInputStyle.Short
+)
 .setRequired(true);
 
-const telefone = new TextInputBuilder()
+const telefone=
+new TextInputBuilder()
+
 .setCustomId("telefone")
-.setLabel("Número celular in-game")
-.setStyle(TextInputStyle.Short)
+.setLabel(
+"Número celular in-game"
+)
+.setStyle(
+TextInputStyle.Short
+)
 .setRequired(true);
 
 modal.addComponents(
-new ActionRowBuilder().addComponents(nome),
-new ActionRowBuilder().addComponents(id),
-new ActionRowBuilder().addComponents(telefone)
+
+new ActionRowBuilder()
+.addComponents(nome),
+
+new ActionRowBuilder()
+.addComponents(id),
+
+new ActionRowBuilder()
+.addComponents(telefone)
+
 );
 
-return interaction.showModal(modal);
+return interaction.showModal(
+modal
+);
+
 }
 
-// enviar formulário
+
+// formulário enviado
+
 if(
 interaction.isModalSubmit() &&
 interaction.customId==="form"
 ){
 
-const nome = interaction.fields.getTextInputValue("nome");
-const id = interaction.fields.getTextInputValue("id");
-const telefone = interaction.fields.getTextInputValue("telefone");
+const nome=
+interaction.fields.getTextInputValue(
+"nome"
+);
 
-const embed = new EmbedBuilder()
-.setTitle("📋 Nova candidatura")
-.addFields(
-{name:"👤 Nome RP",value:nome},
-{name:"🆔 ID",value:id},
-{name:"📱 Celular",value:telefone}
+const id=
+interaction.fields.getTextInputValue(
+"id"
+);
+
+const telefone=
+interaction.fields.getTextInputValue(
+"telefone"
+);
+
+const embed=
+new EmbedBuilder()
+
+.setTitle(
+"📋 Nova candidatura"
 )
-.setColor("#00cfff");
 
-const canal = await client.channels.fetch(CHANNEL_PENDENTE);
+.setColor("#00cfff")
+
+.addFields(
+
+{
+name:"👤 Nome RP",
+value:nome
+},
+
+{
+name:"🆔 ID",
+value:id
+},
+
+{
+name:"📱 Celular",
+value:telefone
+}
+
+);
+
+const row=
+new ActionRowBuilder()
+
+.addComponents(
+
+new ButtonBuilder()
+
+.setCustomId(
+`aprovar_${interaction.user.id}`
+)
+
+.setLabel(
+"✅ Aprovar"
+)
+
+.setStyle(
+ButtonStyle.Success
+),
+
+new ButtonBuilder()
+
+.setCustomId(
+`recusar_${interaction.user.id}`
+)
+
+.setLabel(
+"❌ Recusar"
+)
+
+.setStyle(
+ButtonStyle.Danger
+)
+
+);
+
+const canal=
+await client.channels.fetch(
+CHANNEL_PENDENTE
+);
 
 await canal.send({
-embeds:[embed]
+
+embeds:[embed],
+components:[row]
+
 });
 
 return interaction.reply({
-content:"✅ Candidatura enviada com sucesso!",
+
+content:
+"✅ Candidatura enviada!",
+
 ephemeral:true
+
+});
+
+}
+
+
+// aprovar
+
+if(
+interaction.isButton() &&
+interaction.customId.startsWith(
+"aprovar_"
+)
+){
+
+const userId=
+interaction.customId.split(
+"_"
+)[1];
+
+const member=
+await interaction.guild.members.fetch(
+userId
+);
+
+const fields=
+interaction.message.embeds[0].fields;
+
+const nome=
+fields[0].value;
+
+const id=
+fields[1].value;
+
+await member.roles.add(
+ROLE_ID
+);
+
+await member.roles.remove(
+ROLE_VISITANTE
+);
+
+await member.setNickname(
+`${nome} | ${id}`
+).catch(()=>{});
+
+await interaction.update({
+
+content:"✅ Aprovado",
+
+embeds:
+interaction.message.embeds,
+
+components:[]
+
+});
+
+}
+
+
+// recusar
+
+if(
+interaction.isButton() &&
+interaction.customId.startsWith(
+"recusar_"
+)
+){
+
+await interaction.update({
+
+content:"❌ Recusado",
+
+embeds:
+interaction.message.embeds,
+
+components:[]
+
 });
 
 }
 
 }catch(err){
 
-console.log("ERRO:");
 console.log(err);
 
-if(!interaction.replied){
+if(
+!interaction.replied
+){
+
 interaction.reply({
-content:"❌ Ocorreu um erro",
+
+content:
+"❌ Erro interno",
+
 ephemeral:true
+
 }).catch(()=>{});
+
 }
 
 }
