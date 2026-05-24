@@ -310,23 +310,31 @@ const fields=
 interaction.message.embeds[0].fields;
 
 const nome=
-fields[0].value;
+fields.find(
+f=>f.name==="👤 Nome RP"
+).value;
 
 const id=
-fields[1].value;
+fields.find(
+f=>f.name==="🆔 ID"
+).value;
 
+// dar cargo automático
 await member.roles.add(
 ROLE_ID
 );
 
+// remover visitante
 await member.roles.remove(
 ROLE_VISITANTE
 );
 
+// alterar nickname automático
 await member.setNickname(
 `${nome} | ${id}`
 ).catch(()=>{});
 
+// enviar para aprovados
 const canalAprovados=
 await client.channels.fetch(
 CHANNEL_APROVADOS
@@ -338,14 +346,14 @@ await canalAprovados.send(
 
 👤 Nome RP: ${nome}
 🆔 ID: ${id}
-🙋 Membro: ${member}
+🙋 Discord: ${member}
 🛡️ Staff: ${interaction.user}`
 
 );
 
 await interaction.update({
 
-content:"✅ Aprovado",
+content:"✅ Aprovado com sucesso",
 
 embeds:interaction.message.embeds,
 components:[]
