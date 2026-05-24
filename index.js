@@ -17,7 +17,7 @@ const CHANNEL_RECUSADOS = "1498698744693260318";
 const ROLE_ID = "1498670473649586184";
 const ROLE_VISITANTE = "1498670473649586183";
 
-const IMAGEM = "https://i.postimg.cc/t4JtFt4z/Captura-de-ecra-2026-04-28-145331.png";
+const IMAGEM = "https://i.postimg.cc/jjbwdj9S/6e82bcb2-477c-4f56-ab47-b74988697e50.png";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
@@ -43,7 +43,7 @@ client.once("ready", async () => {
 client.on("interactionCreate", async interaction => {
   if (interaction.isChatInputCommand() && interaction.commandName === "recrutamento_painel") {
     const embed = new EmbedBuilder()
-      .setTitle("📥 RECRUTAMENTO FAMÍLIA 23")
+      .setTitle("📥 RECRUTAMENTO FAMÍLIA BAHAMAS")
       .setDescription("💗 Força • Lealdade • Respeito 💙\n\nClica no botão abaixo para te candidatares.")
       .setColor("#ff007f")
       .setImage(IMAGEM);
@@ -66,7 +66,7 @@ return interaction.editReply("✅ Painel enviado!");
   if (interaction.isButton() && interaction.customId === "recrutar") {
     const modal = new ModalBuilder()
       .setCustomId("form_recrutamento")
-      .setTitle("Candidatura Família 23");
+      .setTitle("Candidatura Família Bahamas");
 
     const nome = new TextInputBuilder()
       .setCustomId("nome")
@@ -174,7 +174,7 @@ await interaction.message.edit({
 });
 
     const approvedChannel = await client.channels.fetch(CHANNEL_APROVADOS);
-    await approvedChannel.send(`✅ ${member} foi aprovado na Família 23.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**\n🛡️ Aprovado por: ${interaction.user}`);
+    await approvedChannel.send(`✅ ${member} foi aprovado na Família Bahamas.\n👤 Nome RP: **${nome}**\n🆔 ID: **${id}**\n🛡️ Aprovado por: ${interaction.user}`);
 
     await interaction.reply(`✅ ${member} aprovado! Cargo dado e nickname alterado.`);
   }
