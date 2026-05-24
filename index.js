@@ -347,7 +347,7 @@ await canalAprovados.send(
 👤 Nome RP: ${nome}
 🆔 ID: ${id}
 🙋 Discord: ${member}
-🛡️ Staff: ${interaction.user}`
+🛡️ Responsavel: ${interaction.user}`
 
 );
 
@@ -390,7 +390,7 @@ await canalRecusados.send(
 `❌ **Candidatura recusada**
 
 🙋 Membro: ${member || "Desconhecido"}
-🛡️ Staff: ${interaction.user}`
+🛡️ RESPONSAVEL: ${interaction.user}`
 
 );
 
