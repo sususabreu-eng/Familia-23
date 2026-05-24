@@ -14,6 +14,8 @@ const TOKEN=process.env.TOKEN;
 
 const CHANNEL_RECRUTAMENTO="1498670476573151463";
 const CHANNEL_PENDENTE="1498698416929247313";
+const CHANNEL_APROVADOS="1498670476069965961";
+const CHANNEL_RECUSADOS="1498698744693260318";
 
 const ROLE_ID="1498670473649586184";
 const ROLE_VISITANTE="1498670473649586183";
@@ -54,7 +56,7 @@ const embed=
 new EmbedBuilder()
 
 .setTitle(
-"📥 RECRUTAMENTO FAMÍLIA 23 BAHAMAS"
+"📥 RECRUTAMENTO FAMÍLIA BAHAMAS"
 )
 
 .setDescription(
@@ -297,9 +299,7 @@ interaction.customId.startsWith(
 ){
 
 const userId=
-interaction.customId.split(
-"_"
-)[1];
+interaction.customId.split("_")[1];
 
 const member=
 await interaction.guild.members.fetch(
@@ -327,13 +327,27 @@ await member.setNickname(
 `${nome} | ${id}`
 ).catch(()=>{});
 
+const canalAprovados=
+await client.channels.fetch(
+CHANNEL_APROVADOS
+);
+
+await canalAprovados.send(
+
+`✅ **Novo membro aprovado**
+
+👤 Nome RP: ${nome}
+🆔 ID: ${id}
+🙋 Membro: ${member}
+🛡️ Staff: ${interaction.user}`
+
+);
+
 await interaction.update({
 
 content:"✅ Aprovado",
 
-embeds:
-interaction.message.embeds,
-
+embeds:interaction.message.embeds,
 components:[]
 
 });
@@ -350,13 +364,33 @@ interaction.customId.startsWith(
 )
 ){
 
+const userId=
+interaction.customId.split("_")[1];
+
+const member=
+await interaction.guild.members.fetch(
+userId
+).catch(()=>null);
+
+const canalRecusados=
+await client.channels.fetch(
+CHANNEL_RECUSADOS
+);
+
+await canalRecusados.send(
+
+`❌ **Candidatura recusada**
+
+🙋 Membro: ${member || "Desconhecido"}
+🛡️ Staff: ${interaction.user}`
+
+);
+
 await interaction.update({
 
 content:"❌ Recusado",
 
-embeds:
-interaction.message.embeds,
-
+embeds:interaction.message.embeds,
 components:[]
 
 });
